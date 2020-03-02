@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load tz %}
+{% block content %}
+<div>
+    <h2>Projects</h2>
+</div>
+<div class="container-fluid card card-body">
+    <div class="row">
+        <div class="input-group mb-3 col-4">
+            <div class="input-group-prepend">
+                <button class="btn btn-primary" type="button"><i class="fa fa-search"></i></span></button>
+            </div>
+            <input class="form-control" placeholder="Search..." type="text">
+        </div>
+        <div class="col-8 text-right">
+            <a class="btn btn-primary" href="{% url 'projects:create' %}">
+                <i class="fa fa-plus"></i> Create Project</a>
+        </div>
+    </div>
+    <table class="table table-sm table-striped">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Create Date</th>
+            <th>Creator</th>
+            <th>Issue No</th>
+            <th>Actions</th>
+        </tr>
+        <tbody>
+        {% for p in project_list %}
+        <tr>
+            <td>{{ p.pk }}</td>
+            <td>
+                {% if p.image %}
+                <img src="{{ p.image.url }}" style="width:30px;"><a href="{% url 'projects:detail' pk=p.pk %}">
+                {{ p.name }}</a>
+                {% else %}
+                <a href="{% url 'projects:detail' pk=p.pk %}">{{ p.name }}</a>
+                {% endif%}
+            </td>
+            <td><a href="{% url 'projects:category_detail' pk=p.category.pk %}">{{ p.category.name }}</a></td>
+            <td>{{ p.create_date|localtime|date:'Y/m/d H:i' }}</td>
+            <td>{{ p.created_by }}</td>
+            <td>{{ p.issues.count }}</td>
+            <td>
+                {% if p.created_by == user %}
+                    <a class="btn btn-sm btn-outline-dark" href="{% url 'projects:update' pk=p.pk %}">
+                        <i class="fa fa-pencil"></i> Update
+                    </a>
+                    <a class="btn btn-sm btn-outline-danger" href="{% url 'projects:delete' pk=p.pk %}">
+                        <i class="fa fa-pencil"></i> Delete
+                    </a>
+                {% endif %}
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'projects:create_issue' project_pk=p.pk %}">
+                    <i class="fa fa-plus"></i> Issue
+                </a>
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'projects:project_issue_list' pk=p.pk %}">
+                    <i class="fa fa-tasks"></i> Issues
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!--  Pagination  -->
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
