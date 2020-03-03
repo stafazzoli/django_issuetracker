@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<p>{{issues.count}}</p>
-    {% include 'projects/_issues.html' %}
+
+<p>page_obj</p>
+
+<div class="container-fluid card card-body">
+    {% include 'projects/_issues.html' with issues=issues page_obj=page_obj %}
+</div>
+
 {% endblock %}

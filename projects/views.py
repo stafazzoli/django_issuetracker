@@ -87,14 +87,14 @@ class UserIssueListView(LoginRequiredMixin, generic.ListView):
         return models.Issue.objects.filter(assignee=user).order_by('-pk')
 
 
-
 # need fixing
 class ProjectIssueListView(LoginRequiredMixin, generic.ListView):
-    template_name = 'projects/_issues.html'
-    # paginate_by = 5
+    template_name = 'projects/project_issues.html'
+    context_object_name = 'issues'
+    paginate_by = 5
 
     def queryset(self):
-        return models.Issue.objects.filter(project=self.request['project_pk'])
+        return models.Issue.objects.filter(project_id=self.kwargs['project_pk'])
 
 
 @login_required()
