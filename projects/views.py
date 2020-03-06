@@ -91,7 +91,7 @@ class UserIssueListView(LoginRequiredMixin, generic.ListView):
 class ProjectIssueListView(LoginRequiredMixin, generic.ListView):
     template_name = 'projects/project_issues.html'
     context_object_name = 'issues'
-    paginate_by = 5
+    # paginate_by = 5
 
     def queryset(self):
         return models.Issue.objects.filter(project_id=self.kwargs['project_pk'])
@@ -100,10 +100,14 @@ class ProjectIssueListView(LoginRequiredMixin, generic.ListView):
 @login_required()
 def issue_change_status(request, pk):
     issue = get_object_or_404(models.Issue, pk=pk)
-    print('')
-    print('')
-    print('')
-    print('')
-    print('***', request.kwargs)
 
-    return redirect('projects:issue_detail', pk=issue.pk)
+    if request.method == 'POST':
+        if 'IP' in request.POST:
+            issue.status = 'IP'
+        elif 'DN' in request.POST:
+            issue.status = 'DN'
+        elif 'CN' in request.POST:
+            issue.status = 'CN'
+        issue.save()
+
+    return redirect('projects:issue_detail', pk=pk)
