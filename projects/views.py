@@ -1,29 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import generic
+from django_tables2 import SingleTableView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from . import models
+from . import tables
 
 
 # Create your views here.
 class ProjectCategoryCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.ProjectCategory
     fields = ('name',)
-    # template_name = 'projectcategory_form.html'
 
 
 class ProjectCategoryDetailView(generic.DetailView):
     model = models.ProjectCategory
-
-
-class ProjectListView(generic.ListView):
-    model = models.Project
-    paginate_by = 5
-
-
-class ProjectDetailView(generic.DetailView):
-    model = models.Project
 
 
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
@@ -61,6 +53,18 @@ class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteV
         return False
 
 
+class ProjectListView(SingleTableView):
+    model = models.Project
+    table_class = tables.ProjectTable
+    table_pagination = {
+        "per_page": 5
+    }
+
+
+class ProjectDetailView(generic.DetailView):
+    model = models.Project
+
+
 class IssueCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.Issue
     fields = ('title', 'priority', 'description', 'assignee', 'attachment')
@@ -87,7 +91,7 @@ class UserIssueListView(LoginRequiredMixin, generic.ListView):
         return models.Issue.objects.filter(assignee=user).order_by('-pk')
 
 
-# need fixing
+# TODO need fixing
 class ProjectIssueListView(LoginRequiredMixin, generic.ListView):
     template_name = 'projects/project_issues.html'
     context_object_name = 'issues'

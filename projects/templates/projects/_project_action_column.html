@@ -1,0 +1,14 @@
+{% if record.created_by == user %}
+    <a class="btn btn-sm btn-outline-dark" href="{% url 'projects:update' pk=record.pk %}">
+        <i class="fa fa-pencil"></i> Update
+    </a>
+    <a class="btn btn-sm btn-outline-danger" href="{% url 'projects:delete' pk=record.pk %}">
+        <i class="fa fa-pencil"></i> Delete
+    </a>
+{% endif %}
+<a class="btn btn-sm btn-outline-primary" href="{% url 'projects:create_issue' project_pk=record.pk %}">
+    <i class="fa fa-plus"></i> Issue
+</a>
+<a class="btn btn-sm btn-outline-primary" href="{% url 'projects:project_issues' project_pk=record.pk %}">
+    <i class="fa fa-tasks"></i> Issues
+</a>
