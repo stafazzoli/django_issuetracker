@@ -6,6 +6,7 @@
     <table class="table table-sm table-striped">
         <caption>User Issues</caption>
         <tr>
+            <th>#</th>
             <th>Priority</th>
             <th>Title</th>
             <th>Description</th>
@@ -15,6 +16,7 @@
         </tr>
         {% for i in issues %}
             <tr>
+                <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
                 <td>{{ i.get_priority_display }}</td>
                 <td>
                     <a href="{% url 'projects:issue_detail' pk=i.pk %}">{{ i.title }}</a>
