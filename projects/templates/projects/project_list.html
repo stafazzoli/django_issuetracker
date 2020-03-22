@@ -21,54 +21,5 @@
 
     {% render_table table %}
 
-    <table class="table table-sm table-striped">
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Create Date</th>
-            <th>Creator</th>
-            <th>Issue No</th>
-            <th>Actions</th>
-        </tr>
-        <tbody>
-        {% for p in project_list %}
-        <tr>
-            <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
-            <td>
-                {% if p.image %}
-                <img src="{{ p.image.url }}" style="width:30px;"><a href="{% url 'projects:detail' pk=p.pk %}">
-                {{ p.name }}</a>
-                {% else %}
-                <a href="{% url 'projects:detail' pk=p.pk %}">{{ p.name }}</a>
-                {% endif%}
-            </td>
-            <td><a href="{% url 'projects:category_detail' pk=p.category.pk %}">{{ p.category.name }}</a></td>
-            <td>{{ p.create_date|localtime|date:'Y/m/d H:i' }}</td>
-            <td>{{ p.created_by }}</td>
-            <td>{{ p.issues.count }}</td>
-            <td>
-                {% if p.created_by == user %}
-                    <a class="btn btn-sm btn-outline-dark" href="{% url 'projects:update' pk=p.pk %}">
-                        <i class="fa fa-pencil"></i> Update
-                    </a>
-                    <a class="btn btn-sm btn-outline-danger" href="{% url 'projects:delete' pk=p.pk %}">
-                        <i class="fa fa-pencil"></i> Delete
-                    </a>
-                {% endif %}
-                <a class="btn btn-sm btn-outline-primary" href="{% url 'projects:create_issue' project_pk=p.pk %}">
-                    <i class="fa fa-plus"></i> Issue
-                </a>
-                <a class="btn btn-sm btn-outline-primary" href="{% url 'projects:project_issues' project_pk=p.pk %}">
-                    <i class="fa fa-tasks"></i> Issues
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-
-
 </div>
 {% endblock %}
