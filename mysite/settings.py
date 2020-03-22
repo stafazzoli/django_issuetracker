@@ -147,4 +147,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 INTERNAL_IPS = ['127.0.0.1']
 
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
+
 django_heroku.settings(locals())
