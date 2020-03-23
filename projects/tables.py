@@ -14,13 +14,14 @@ class ProjectTable(tables.Table):
     def render_image(self, record):
         return format_html(f'<img src="{record.image.url}" style="width:30px;">')
 
-    def render_issue_no(self, record, value):
+    def render_issue_no(self, record):
         return record.issues.count()
 
     class Meta:
         model = Project
         attrs = {'class': 'table table-sm table-striped'}
         fields = ('row_number', 'image', 'name', 'category', 'create_date', 'created_by',)
+        empty_text = 'No Projects Found.'
 
     row_number = tables.columns.Column(verbose_name='#', empty_values=(), orderable=False)
     image = tables.columns.Column(orderable=False)
