@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from . import models
 from . import tables
+from . import filters
 
 
 # Create your views here.
@@ -53,12 +54,24 @@ class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteV
         return False
 
 
-class ProjectListView(SingleTableView):
+class FilteredProjectListView(SingleTableView):
     model = models.Project
     table_class = tables.ProjectTable
     table_pagination = {
         "per_page": 5
     }
+    template_name = 'project_list.html'
+    filter_class = filters.ProjectFilter
+
+    def get_queryset(self, **kwargs):
+        qs = super(FilteredProjectListView, self).get_queryset()
+        self.filter = self.filter_class(self.request.GET, queryset=qs)
+        return self.filter.qs
+
+    def get_context_data(self, **kwargs):
+        context = super(FilteredProjectListView, self).get_context_data()
+        context['filter'] = self.filter
+        return context
 
 
 class ProjectDetailView(generic.DetailView):

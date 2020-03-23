@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'crispy_forms',
     'django_tables2',
+    'django_filters',
     'accounts.apps.AccountsConfig',
     'projects.apps.ProjectsConfig',
 ]
