@@ -3,13 +3,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import generic
 from django_tables2 import SingleTableView
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from . import models
 from . import tables
 from . import filters
 
 
-# Create your views here.
 class ProjectCategoryCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.ProjectCategory
     fields = ('name',)
@@ -46,7 +45,7 @@ class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteV
     model = models.Project
     success_url = '/projects'
 
-    # Only the creator can update the project
+    # Only the creator can delete the project
     def test_func(self):
         project = self.get_object()
         if self.request.user == project.created_by:
@@ -77,6 +76,21 @@ class FilteredProjectListView(SingleTableView):
 class ProjectDetailView(generic.DetailView):
     model = models.Project
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        paginator = Paginator(self.object.issues.all(), 5)
+        page_number = self.request.GET.get('page', 1)
+        try:
+            page_obj = paginator.get_page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+
+        context['page_obj'] = page_obj
+        return context
+
 
 class IssueCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.Issue
@@ -100,17 +114,15 @@ class UserIssueListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return models.Issue.objects.filter(assignee=user).order_by('-pk')
+        return models.Issue.objects.filter(assignee=self.request.user).order_by('-pk')
 
 
-# TODO need fixing
 class ProjectIssueListView(LoginRequiredMixin, generic.ListView):
     template_name = 'projects/project_issues.html'
     context_object_name = 'issues'
-    # paginate_by = 5
+    paginate_by = 5
 
-    def queryset(self):
+    def get_queryset(self):
         return models.Issue.objects.filter(project_id=self.kwargs['project_pk'])
 
 

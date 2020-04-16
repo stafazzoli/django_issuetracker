@@ -1,7 +1,6 @@
 from django_tables2 import tables, TemplateColumn
 from django.utils.html import format_html
 from .models import Project
-from django.db.models import F
 import itertools
 
 

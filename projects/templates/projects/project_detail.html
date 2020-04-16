@@ -27,7 +27,7 @@
         <p>Last Update Date: {{ project.update_date|date:"Y/m/d" }}</p>
         <p>Description: {{ project.description|linebreaks }}</p>
     </div>
-    {% include 'projects/_issues.html' %}
+    {% include 'projects/_issues.html' with is_paginated=True %}
 </div>
 
 {% endblock %}

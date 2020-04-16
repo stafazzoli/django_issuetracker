@@ -3,51 +3,7 @@
 
 <div class="container card card-body">
     <h2 class="mb-3">{{ view.kwargs.username }} Issues</h2>
-    <table class="table table-sm table-striped">
-        <caption>User Issues</caption>
-        <tr>
-            <th>#</th>
-            <th>Priority</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Reporter</th>
-            <th>Create Date</th>
-        </tr>
-        {% for i in issues %}
-            <tr>
-                <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
-                <td>{{ i.get_priority_display }}</td>
-                <td>
-                    <a href="{% url 'projects:issue_detail' pk=i.pk %}">{{ i.title }}</a>
-                </td>
-                <td>{{ i.description|truncatechars:20 }}</td>
-                <td>{{ i.get_status_display }}</td>
-                <td>{{ i.reporter.username }}</td>
-                <td>{{ i.create_date|date:'Y/m/d' }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    <!--  Pagination  -->
-    {% if is_paginated %}
-    <div class="pagination">
-                <span class="step-links">
-                    {% if page_obj.has_previous %}
-                        <a href="?page=1">&laquo; First</a>
-                        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                    {% endif %}
-
-                    <span class="current">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                    </span>
-
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">Next</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
-                    {% endif %}
-                </span>
-    </div>
-    {% endif %}
+    {% include 'projects/_issues.html' %}
 </div>
 
 {% endblock %}
