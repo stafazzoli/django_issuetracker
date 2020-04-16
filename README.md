@@ -21,7 +21,7 @@ https://theissuetracker.herokuapp.com/
 ## Installation
 Install dependencies via `requirements.txt`
 ```shell script
-pip3 install requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Setting the Environment Variables
