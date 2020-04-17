@@ -11,8 +11,8 @@
         <h4><strong>{{ issue.title }}</strong></h4>
     </div>
     <div class="container">
-        <button class="btn btn-outline-secondary btn-sm" type="button"><i class="fa fa-pencil"></i> Edit</button>
-        <button class="btn btn-outline-secondary btn-sm" type="button"><i class="fa fa-user-plus"></i> Assign</button>
+        <a class="btn btn-outline-secondary btn-sm" href="{% url 'projects:update_issue' pk=issue.pk %}"><i class="fa fa-edit"></i> Update</a>
+        <a class="btn btn-outline-secondary btn-sm" href="{% url 'projects:delete_issue' pk=issue.pk %}"><i class="fa fa-trash"></i> Delete</a>
 
         <div class="mt-3">
             <form action="{% url 'projects:change_status' pk=issue.pk %}" method="POST">

@@ -104,6 +104,23 @@ class IssueCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
+class IssueUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = models.Issue
+    fields = ('project', 'title', 'description', 'priority', 'status', 'attachment', 'assignee')
+
+
+class IssueDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = models.Issue
+    success_url = '/'
+
+    # Only the creator can delete the issue
+    def test_func(self):
+        issue = self.get_object()
+        if self.request.user == issue.reporter:
+            return True
+        return False
+
+
 class IssueDetailView(LoginRequiredMixin, generic.DetailView):
     model = models.Issue
 

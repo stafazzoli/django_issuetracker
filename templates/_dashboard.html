@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-md-5 mt-3">
-        <h5>PROJECTS:</h5>
+        <h5>PROJECTS</h5>
         <hr>
         <div class="card card-body">
             <a class="btn btn-primary btn-sm btn-block" href="{% url 'projects:create' %}">Create Project</a>
-            <table class="table table-sm">
+            <table class="table table-sm table-striped">
                 <tr>
                     <th></th>
                     <th>Name</th>
-                    <th>Issues</th>
+                    <th>Issue No</th>
                 </tr>
                 {% for p in projects %}
                 <tr>
@@ -25,14 +25,14 @@
         <h5>LAST 5 ISSUES</h5>
         <hr>
         <div class="card card-body">
-            <table class="table table-sm">
+            <table class="table table-sm table-striped">
                 <tr>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Status</th>
                     <th>Reporter</th>
                     <th>Update</th>
-                    <th>Remove</th>
+                    <th>Delete</th>
                 </tr>
                 {% for i in issues %}
                 <tr>
@@ -40,8 +40,8 @@
                     <td>{{ i.description|truncatechars:20 }}</td>
                     <td>{{ i.get_status_display }}</td>
                     <td>{{ i.reporter.username }}</td>
-                    <td><a class="btn btn-sm btn-info" href="#">Update</a></td>
-                    <td><a class="btn btn-sm btn-danger" href="#">Delete</a></td>
+                        <td><a class="btn btn-sm btn-info btn-block" href="{% url 'projects:update_issue' pk=i.pk %}"><i class="fa fa-edit"> </a></td>
+                    <td><a class="btn btn-sm btn-danger btn-block" href="{% url 'projects:delete_issue' pk=i.pk %}"><i class="fa fa-trash"></a></td>
                 </tr>
                 {% endfor %}
             </table>
