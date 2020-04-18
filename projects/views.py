@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import generic
 from django_tables2 import SingleTableView
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from . import models
@@ -131,7 +132,8 @@ class UserIssueListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        return models.Issue.objects.filter(assignee=self.request.user).order_by('-pk')
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return models.Issue.objects.filter(assignee=user).order_by('-pk')
 
 
 class ProjectIssueListView(LoginRequiredMixin, generic.ListView):
