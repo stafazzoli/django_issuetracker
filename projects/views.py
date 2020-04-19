@@ -144,6 +144,12 @@ class ProjectIssueListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return models.Issue.objects.filter(project_id=self.kwargs['project_pk'])
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        project = get_object_or_404(models.Project, pk=self.kwargs['project_pk'])
+        context['project'] = project
+        return context
+
 
 @login_required()
 def issue_change_status(request, pk):

@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
-{% block content %}
 
+{% block title %}
+    Issue Tracker - User Issues
+{% endblock %}
+
+{% block content %}
 <div class="container card card-body">
     <h2 class="mb-3">{{ view.kwargs.username }} Issues</h2>
     {% include 'projects/_issues.html' %}
 </div>
-
 {% endblock %}

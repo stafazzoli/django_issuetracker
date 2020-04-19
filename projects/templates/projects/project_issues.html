@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
-{% block content %}
 
+{% block title %}
+    Issue Tracker - Project Issues
+{% endblock %}
+
+{% block content %}
+<div>
+    <h2>Project {{ project.name }} Issues</h2>
+</div>
 <div class="container-fluid card card-body">
     {% include 'projects/_issues.html' %}
 </div>
-
 {% endblock %}

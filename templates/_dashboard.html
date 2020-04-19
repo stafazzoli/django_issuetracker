@@ -1,50 +1,56 @@
 <div class="row">
-    <div class="col-md-5 mt-3">
-        <h5>PROJECTS</h5>
-        <hr>
-        <div class="card card-body">
-            <a class="btn btn-primary btn-sm btn-block" href="{% url 'projects:create' %}">Create Project</a>
-            <table class="table table-sm table-striped">
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Issue No</th>
-                </tr>
-                {% for p in projects %}
-                <tr>
-                    <td><a class="btn btn-sm btn-info" href="{% url 'projects:detail' pk=p.pk %}">View</a></td>
-                    <td>{{ p.name }}</td>
-                    <td>{{ p.issues.count }}</td>
-                </tr>
-                {% endfor %}
-            </table>
+    <div class="col-lg-4">
+        <!-- Basic Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+            </div>
+            <div class="card-body">
+                <a class="btn btn-primary btn-sm btn-block mb-2" href="{% url 'projects:create' %}">Create Project</a>
+                <table class="table table-sm table-striped">
+                    <tr>
+                        <th>Name</th>
+                        <th>Issue No</th>
+                        <th></th>
+                    </tr>
+                    {% for p in projects %}
+                    <tr>
+                        <td>{{ p.name }}</td>
+                        <td>{{ p.issues.count }}</td>
+                        <td><a class="btn btn-sm btn-info" href="{% url 'projects:detail' pk=p.pk %}"><i class="fa fa-eye"></a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
 
-    <div class="col-md-7 mt-3">
-        <h5>LAST 5 ISSUES</h5>
-        <hr>
-        <div class="card card-body">
-            <table class="table table-sm table-striped">
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Reporter</th>
-                    <th>Update</th>
-                    <th>Delete</th>
-                </tr>
-                {% for i in issues %}
-                <tr>
-                    <td>{{ i.title }}</td>
-                    <td>{{ i.description|truncatechars:20 }}</td>
-                    <td>{{ i.get_status_display }}</td>
-                    <td>{{ i.reporter.username }}</td>
-                        <td><a class="btn btn-sm btn-info btn-block" href="{% url 'projects:update_issue' pk=i.pk %}"><i class="fa fa-edit"> </a></td>
-                    <td><a class="btn btn-sm btn-danger btn-block" href="{% url 'projects:delete_issue' pk=i.pk %}"><i class="fa fa-trash"></a></td>
-                </tr>
-                {% endfor %}
-            </table>
+    <div class="col-lg-8">
+        <!-- Basic Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Last 10 Issues</h6>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm table-striped">
+                    <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Reporter</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for i in issues %}
+                    <tr>
+                        <td>{{ i.title }}</td>
+                        <td>{{ i.get_status_display }}</td>
+                        <td>{{ i.reporter.username }}</td>
+                        <td><a class="btn btn-sm btn-info btn-block" href="{% url 'projects:update_issue' pk=i.pk %}"><i class="fa fa-edit"></a></td>
+                        <td><a class="btn btn-sm btn-danger btn-block" href="{% url 'projects:delete_issue' pk=i.pk %}"><i class="fa fa-trash"></a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
-{% block content %}
 
+{% block title %}
+    Issue Tracker - Project
+{% endblock %}
+
+{% block content %}
 <div class="container card card-body">
     <h1>
         {% if p.image %}
@@ -29,5 +33,4 @@
     </div>
     {% include 'projects/_issues.html' with is_paginated=True %}
 </div>
-
 {% endblock %}

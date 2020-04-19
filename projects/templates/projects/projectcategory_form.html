@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block content %}
 
+{% block title %}
+    Issue Tracker - Project Category
+{% endblock %}
+
+{% block content %}
 <div class="container">
     <form class="form-group" method="POST">
         <legend class="border-bottom mb-4">New Project category</legend>
@@ -10,5 +14,4 @@
         <button type="submit" class="btn btn-success">Login</button>
     </form>
 </div>
-
 {% endblock %}

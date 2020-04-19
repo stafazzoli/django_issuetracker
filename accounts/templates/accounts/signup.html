@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block content %}
 
+{% block title %}
+    Issue Tracker - Sign Up
+{% endblock %}
+
+{% block content %}
 <div class="container">
     <form method="POST">
         {% csrf_token %}
@@ -17,5 +21,4 @@
         </small>
     </div>
 </div>
-
 {% endblock %}

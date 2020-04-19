@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
-{% block content %}
 
+{% block title %}
+    Issue Tracker - Delete Project
+{% endblock %}
+
+{% block content %}
 <div class="container card card-body">
     <form class="form-group" method="POST">
         <legend class="border-bottom mb-4">Delete Project</legend>
@@ -10,5 +14,4 @@
         <a href="{% url 'projects:detail' pk=project.pk %}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
-
 {% endblock %}
