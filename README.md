@@ -1,22 +1,38 @@
 # Issue Tracker Web Application
-This web application is developed using Django, a high-level Python Web framework. It uses `Python 3.6.3`, `Django 3.0.4` and SQLite database. 
+This web application is developed using Django, a high-level Python Web framework. It uses `Python 3.6.3`, `Django 3.0.4` and SQLite database for development. 
 
-This project includes two main apps:
+This project comprises three main apps:
 1. Accounts:
   Using the built-in Django authentication app, the User model extended to include other properties and functionalities.
 2. Projects:
-  This app manages projects and reported issues for each project. Only superusers can create a project category in the admin panel. Logged in users can create new projects and issues. A project can only be updated/ deleted by its creator.
-  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-After creating an issue for a project, the assignee can update the issue status to Done, In Progress or Cancelled. 
-  Each user can see the issues that are assigned to herself in another view. 
+  This app manages projects and reported issues for each project. Only superusers can create a project category using the admin panel. Logged in users can create new projects and issues. A project can only be updated/ deleted by its creator.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+After creating an issue for a project, the assignee can update the issue status to 'Done', 'In Progress' or 'Cancelled'. Only the reporter has the right to delete a given issue.
+  Each user can see the issue list that are assigned to herself in another view. 
+3. APIs:
+  For the sake of clarity, the RESTful APIs are put under different app/ url. Logged in users are authorized to get and put methods. A customized permission is also developed to ensure that only the issue's reporter can update and delete it.
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  Using `Django Rest Framework (DRF)`, the following interfaces are created:
+  
+| Endpoint      | HTTP Method  | Result|
+| ------------- |:------------:| -----|
+| issues        | GET          | Get all the issues |
+| issues        | POST         | Add a single issue |
+| issue/:pk     | GET          | Get a single issue |
+| issue/:pk     | PUT          | Updates a single issue |
+| issue/:pk     | DELETE       | Deletes a single issue |   
+
+
+
 Both class-based views and function-based views are used in this application.
   We also used `django-tables2` and `django-filter` for the project list page to employ their DRY features in table rendering and filtering.
 
 The issue tracker web application is also deployed on Heroku:
 https://theissuetracker.herokuapp.com/
+
+***
 
 ## Installation
 Install dependencies via `requirements.txt`

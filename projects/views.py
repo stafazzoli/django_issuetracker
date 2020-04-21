@@ -114,7 +114,7 @@ class IssueDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteVie
     model = models.Issue
     success_url = '/'
 
-    # Only the creator can delete the issue
+    # Only the reporter can delete the issue
     def test_func(self):
         issue = self.get_object()
         if self.request.user == issue.reporter:

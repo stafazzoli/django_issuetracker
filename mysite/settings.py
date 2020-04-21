@@ -26,7 +26,7 @@ SECRET_KEY = (os.environ.get('SECRET_KEY') == True)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['theissuetracker.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'theissuetracker.herokuapp.com']
 
 
 # Application definition
@@ -38,12 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'debug_toolbar',
     'crispy_forms',
     'django_tables2',
     'django_filters',
     'accounts.apps.AccountsConfig',
     'projects.apps.ProjectsConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -107,6 +109,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Pagination for Django Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
