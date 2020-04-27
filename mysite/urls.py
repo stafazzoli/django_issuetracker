@@ -28,7 +28,7 @@ urlpatterns = [
     path('projects/', include('projects.urls', namespace='projects')),
 
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api/', include('api.urls', namespace='api')),
+    path('api/v1/', include('api.urls', namespace='api')),
 ]
 
 if settings.DEBUG:
