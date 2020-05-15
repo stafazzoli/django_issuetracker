@@ -10,7 +10,13 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Project</legend>
+            <legend class="border-bottom mb-4">
+                {% if form.instance.pk %}
+                    Project
+                {% else %}
+                    New Project
+                {% endif %}
+            </legend>
             {{ form|crispy }}
         </fieldset>
         <button type="submit" class="btn btn-success">Save</button>

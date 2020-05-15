@@ -8,7 +8,13 @@
 {% block content %}
 <div class="container">
     <form class="form-group" method="POST">
-        <legend class="border-bottom mb-4">New Project category</legend>
+        <legend class="border-bottom mb-4">
+            {% if form.instance.pk %}
+                Project Category
+            {% else %}
+                New Project Category
+            {% endif %}
+        </legend>
         {% csrf_token %}
         {{ form|crispy }}
         <button type="submit" class="btn btn-success">Login</button>
