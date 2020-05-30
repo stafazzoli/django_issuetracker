@@ -81,4 +81,4 @@ The contents of `.env` the file should be set as `KEY=VALUE`.
 docker-compose build
 docker-compose up
 ```
-4. The application will be running at http://0.0.0.0:8000/
+4. The application will be running at http://127.0.0.1:8000/
